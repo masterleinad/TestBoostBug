@@ -27,30 +27,18 @@
 #include <cstddef> // NULL
 #include <fstream>
 
-#include <cstdio> // remove
 #include <boost/config.hpp>
-#if defined(BOOST_NO_STDC_NAMESPACE)
-namespace std{ 
-    using ::remove;
-}
-#endif
-
-// for now, only test with simple text archive
-#define BOOST_ARCHIVE_TEST text_archive.hpp
-//#include "test_tools.hpp"
 
 #include <boost/archive/archive_exception.hpp>
 
 #include <boost/serialization/base_object.hpp>
 #include <boost/serialization/export.hpp>
-#include <boost/serialization/access.hpp>
 
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
 
 #include "polymorphic_base.hpp"
 
-#define POLYMORPHIC_DERIVED2_IMPORT
 #include "polymorphic_derived2.hpp"
 
 // save exported polymorphic class
