@@ -19,6 +19,7 @@ endforeach()
 ADD_LIBRARY(derived SHARED polymorphic_derived2.cpp)
 ADD_EXECUTABLE(test_boost test_dll_exported.cpp)
 
+TARGET_LINK_LIBRARIES(derived boost_serialization)
 TARGET_LINK_LIBRARIES(test_boost derived boost_serialization)
 
 ADD_CUSTOM_TARGET(run
