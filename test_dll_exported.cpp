@@ -48,12 +48,15 @@ void save_exported(const char *testfile)
     boost::archive::text_oarchive oa(os);
 
     polymorphic_base *rb2 = new polymorphic_derived2;
+    polymorphic_derived2 *rd21 = new polymorphic_derived2;
 
     // export will permit correct serialization
     // through a pointer to a base class
     oa << BOOST_SERIALIZATION_NVP(rb2);
+    oa << BOOST_SERIALIZATION_NVP(rd21);
 
     delete rb2;
+    delete rd21;
 }
 
 // save exported polymorphic class
@@ -63,6 +66,7 @@ void load_exported(const char *testfile)
     boost::archive::text_iarchive ia(is);
 
     polymorphic_base *rb2 = NULL;
+    polymorphic_derived2 *rd21 = NULL;
 
     // export will permit correct serialization
     // through a pointer to a base class
@@ -70,10 +74,18 @@ void load_exported(const char *testfile)
     assert(
         boost::serialization::type_info_implementation<polymorphic_derived2>
             ::type::get_const_instance()
-        == 
+        ==
         * boost::serialization::type_info_implementation<polymorphic_base>
             ::type::get_const_instance().get_derived_extended_type_info(*rb2));
+    ia >> BOOST_SERIALIZATION_NVP(rd21);
+    assert(
+        boost::serialization::type_info_implementation<polymorphic_derived2>
+            ::type::get_const_instance()
+        ==
+        * boost::serialization::type_info_implementation<polymorphic_derived2>
+            ::type::get_const_instance().get_derived_extended_type_info(*rd21));
     delete rb2;
+    delete rd21;
 }
 
 int main( int /* argc */, char* /* argv */[] )

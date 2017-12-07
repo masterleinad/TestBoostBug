@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.8)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.8)
 PROJECT(TestBoost)
 
 FIND_PACKAGE(Boost REQUIRED serialization)
@@ -21,4 +21,7 @@ ADD_EXECUTABLE(test_boost test_dll_exported.cpp)
 
 TARGET_LINK_LIBRARIES(test_boost derived boost_serialization)
 
-
+ADD_CUSTOM_TARGET(run
+                  COMMAND test_boost
+                  DEPENDS test_boost
+                  WORKING_DIRECTORY ${CMAKE_PROJECT_DIR})
